@@ -1,6 +1,10 @@
 <?php
 
+use App\Entity\User;
+
 interface IUserService {
-    public function getUserByGivenField($field);
+    public function getUserById(int $id);
+
+    public function addUserIdToSession(int $id);
 
 }
