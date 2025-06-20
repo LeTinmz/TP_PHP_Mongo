@@ -3,6 +3,7 @@
 namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[MongoDB\Document(collection: 'reviews')]
 class Reviews
@@ -14,9 +15,18 @@ class Reviews
     private int $bookId;
 
     #[MongoDB\Field(type: "int")]
+    #[Assert\Range(
+        notInRangeMessage: 'La note doit être comprise entre {{ min }} et {{ max }}.',
+        min: 0,
+        max: 5
+    )]
     private int $rating;
 
     #[MongoDB\Field(type: "string")]
+    #[Assert\Length(
+        max: 511,
+        maxMessage: 'Le commentaire ne doit pas dépasser {{ limit }} caractères.'
+    )]
     private string $comments;
 
     #[MongoDB\Field(type: "date")]

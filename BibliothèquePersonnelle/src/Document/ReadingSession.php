@@ -3,7 +3,7 @@
 namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-
+use Symfony\Component\Validator\Constraints as Assert;
 #[MongoDB\Document(collection: 'reading_sessions')]
 class ReadingSession
 {
@@ -11,22 +11,30 @@ class ReadingSession
     private string $id;
 
     #[MongoDB\Field(type: 'int')]
-    private int $pagesLues;
+    #[Assert\GreaterThanOrEqual(
+        value: 0,
+        message: 'Le nombre de pages lues ne peut pas être négatif.'
+    )]
+    private int $pagesRead;
 
     #[MongoDB\Field(type: 'float')]
-    private float $tempsPasse;
+    private float $readingTime;
 
     #[MongoDB\Field(type: 'string')]
-    private string $notesPersonnelles;
+    #[Assert\Length(
+        max: 1022,
+        maxMessage: 'Les notes personnelles ne doivent pas dépasser {{ limit }} caractères.'
+    )]
+    private string $personnalNotes;
 
     #[MongoDB\Field(type: 'int')]
     private int $bookId;
 
-    public function __construct(int $pagesLues, float $tempsPasse, string $notesPersonnelles, int $bookId)
+    public function __construct(int $pagesRead, float $readingTime, string $personnalNotes, int $bookId)
     {
-        $this->pagesLues = $pagesLues;
-        $this->tempsPasse = $tempsPasse;
-        $this->notesPersonnelles = $notesPersonnelles;
+        $this->pagesRead = $pagesRead;
+        $this->readingTime = $readingTime;
+        $this->personnalNotes = $personnalNotes;
         $this->bookId = $bookId;
     }
 
@@ -35,34 +43,34 @@ class ReadingSession
         return $this->id;
     }
 
-    public function getPagesLues(): int
+    public function getPagesRead(): int
     {
-        return $this->pagesLues;
+        return $this->pagesRead;
     }
 
-    public function setPagesLues(int $pagesLues): void
+    public function setPagesRead(int $pagesRead): void
     {
-        $this->pagesLues = $pagesLues;
+        $this->pagesRead = $pagesRead;
     }
 
-    public function getTempsPasse(): float
+    public function getReadingTime(): float
     {
-        return $this->tempsPasse;
+        return $this->readingTime;
     }
 
-    public function setTempsPasse(float $tempsPasse): void
+    public function setReadingTime(float $readingTime): void
     {
-        $this->tempsPasse = $tempsPasse;
+        $this->readingTime = $readingTime;
     }
 
-    public function getNotesPersonnelles(): string
+    public function getPersonnalNotes(): string
     {
-        return $this->notesPersonnelles;
+        return $this->personnalNotes;
     }
 
-    public function setNotesPersonnelles(string $notesPersonnelles): void
+    public function setPersonnalNotes(string $personnalNotes): void
     {
-        $this->notesPersonnelles = $notesPersonnelles;
+        $this->personnalNotes = $personnalNotes;
     }
 
     public function getBookId(): int

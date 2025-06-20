@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Enum\CategoryType;
+
 use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,14 +16,14 @@ class Categories
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(enumType: CategoryType::class)]
-    private ?CategoryType $categoryName = null;
-
     /**
      * @var Collection<int, Books>
      */
     #[ORM\ManyToMany(targetEntity: Books::class, inversedBy: 'categories')]
     private Collection $bookCollection;
+
+    #[ORM\Column(length: 50)]
+    private ?string $categoryName = null;
 
     public function __construct()
     {
@@ -35,10 +35,6 @@ class Categories
         return $this->id;
     }
 
-    public function getCategoryName(): CategoryType
-    {
-        return $this->categoryName;
-    }
 
     /**
      * @return Collection<int, Books>
@@ -60,6 +56,18 @@ class Categories
     public function removeBookId(Books $bookId): static
     {
         $this->bookCollection->removeElement($bookId);
+
+        return $this;
+    }
+
+    public function getCategoryName(): ?string
+    {
+        return $this->categoryName;
+    }
+
+    public function setCategoryName(string $categoryName): static
+    {
+        $this->categoryName = $categoryName;
 
         return $this;
     }
