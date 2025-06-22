@@ -30,12 +30,16 @@ class ReadingSession
     #[MongoDB\Field(type: 'int')]
     private int $bookId;
 
-    public function __construct(int $pagesRead, float $readingTime, string $personnalNotes, int $bookId)
+    #[MongoDB\Field(type: 'int')]
+    private int $userId;
+
+    public function __construct(int $pagesRead, float $readingTime, string $personnalNotes, int $bookId, int $userId)
     {
         $this->pagesRead = $pagesRead;
         $this->readingTime = $readingTime;
         $this->personnalNotes = $personnalNotes;
         $this->bookId = $bookId;
+        $this->userId = $userId;
     }
 
     public function getId(): string
@@ -81,5 +85,15 @@ class ReadingSession
     public function setBookId(int $bookId): void
     {
         $this->bookId = $bookId;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(int $userId): void
+    {
+        $this->userId = $userId;
     }
 }
