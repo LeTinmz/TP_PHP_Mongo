@@ -6,6 +6,7 @@ use App\Repository\BooksRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BooksRepository::class)]
 class Books
@@ -19,9 +20,22 @@ class Books
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z0-9.\-\s]+$/u',
+        message: 'Le nom de l’auteur ne doit contenir que des lettres, chiffres, tirets ou points.'
+    )]
     private ?string $author = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 10,
+        max: 13,
+        exactMessage: 'L’ISBN doit contenir entre 10 et 13 caractères.'
+    )]
+    #[Assert\Regex(
+        pattern: '/^[0-9\-]+$/',
+        message: 'L’ISBN ne doit contenir que des chiffres et des tirets.'
+    )]
     private ?string $isbn = null;
 
     #[ORM\ManyToOne(inversedBy: 'books')]
