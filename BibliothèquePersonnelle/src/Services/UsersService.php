@@ -14,6 +14,14 @@ class UsersService
         $this->repository->find($user->getId());
     }
 
+    public function getUserById(int $id){
+
+        return $this->repository->find($id);
+    }
+
+    public function defineUserLibrary(Users $user){
+        return $user->getBooks();
+    }
 
 
 

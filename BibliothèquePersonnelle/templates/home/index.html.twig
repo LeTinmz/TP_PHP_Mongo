@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma Bibliothèque{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue {{ user.name }}</h1>
+
+    <table class="book-table">
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>ISBN</th>
+            <th>Catégories</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for book in user.books %}
+            <tr>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.isbn }}</td>
+                <td>
+                    {% if book.categories is not empty %}
+                        {{ book.categories|map(c => c.categoryName)|join(', ') }}
+                    {% else %}
+                        Aucune
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr><td colspan="4">Aucun livre trouvé.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
