@@ -7,9 +7,11 @@ use ReviewDTO;
 
 class ReviewService implements IReviewService
 {
+    public function __construct(){}
     public function addReviewByBookId(int $id, ReviewDTO $reviewDTO)
     {
         // TODO: Implement addReviewByBookId() method.
+
     }
     public function getBookReviewsByBookId(int $id)
     {
