@@ -26,12 +26,11 @@ class BooksService {
 
     public function getRandomBook(){
         return new BookDTO("coucou","wesh","keskidi");
-
     }
 
-    public function getBooksByCategory(CategoryType $category):array{
+    public function getBooksByCategory(Categories $category):array{
         $booksToReturn = [];
-        $books = $this->booksRepository->find($category);
+        $books = $this->booksRepository->findBy(["category"=>$category]);
         foreach ($books as $book){
             $booksToReturn[] = new BookDTO($book->getTitle(), $book->getAuthor(), $book->getCategories());
         }

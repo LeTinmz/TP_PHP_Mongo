@@ -16,6 +16,22 @@ class BooksRepository extends ServiceEntityRepository
         parent::__construct($registry, Books::class);
     }
 
+    public function addBook(Books $book): void{
+        
+        if(!empty($book)){
+            try {
+                
+                
+            } catch(\Exception $e){
+                
+                
+            }
+
+        }
+       
+
+    }
+
     //    /**
     //     * @return Books[] Returns an array of Books objects
     //     */
