@@ -15,6 +15,9 @@ class Reviews
     private int $bookId;
 
     #[MongoDB\Field(type: "int")]
+    private int $userId;
+
+    #[MongoDB\Field(type: "int")]
     #[Assert\Range(
         notInRangeMessage: 'La note doit être comprise entre {{ min }} et {{ max }}.',
         min: 0,
@@ -32,12 +35,23 @@ class Reviews
     #[MongoDB\Field(type: "date")]
     private \DateTime $date;
 
-    public function __construct(int $bookId, int $rating, string $comments)
+    public function __construct(int $bookId,int $userId, int $rating, string $comments)
     {
         $this->bookId = $bookId;
+        $this->userId = $userId;
         $this->rating = $rating;
         $this->comments = $comments;
         $this->date = new \DateTime();
+    }
+
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(int $userId): void
+    {
+        $this->userId = $userId;
     }
 
     public function getId(): string
